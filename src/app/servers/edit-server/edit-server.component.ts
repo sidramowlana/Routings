@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { ServerService } from '../server.service';
 
 @Component({
@@ -9,14 +9,15 @@ import { ServerService } from '../server.service';
 export class EditServerComponent implements OnInit {
 
   server :{id:number, name:string,status:string};
-  serverName='';
+  // serverName='';
+  @ViewChild('serverName') serverName:ElementRef;
   serverStatus='';
   
   constructor(private serverService:ServerService) { }
 
   ngOnInit() {
     this.server = this.serverService.getServer(1);
-    this.serverName = this.server.name;
+    this.serverName.nativeElement = this.server.name;
     this.serverStatus = this.server.status;
   }
 
