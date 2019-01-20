@@ -15,8 +15,13 @@ export class EditServerComponent implements OnInit {
   constructor(private serverService:ServerService) { }
 
   ngOnInit() {
+<<<<<<< HEAD
     this.server = this.serverService.getServer(2);
     this.serverName.nativeElement.value = this.server.name;
+=======
+    this.server = this.serverService.getServer(1);
+    this.serverName.nativeElement = this.server.name;
+>>>>>>> babba7f45434cd0621835d13768ef268e95f8703
     this.serverStatus = this.server.status;
   }
 
