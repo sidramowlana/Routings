@@ -1,5 +1,6 @@
 import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { ServerService } from '../server.service';
+import { Router, ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-edit-server',
@@ -12,7 +13,9 @@ export class EditServerComponent implements OnInit {
   // serverName='';
   @ViewChild('serverName') serverName:ElementRef;
   serverStatus='';
-  constructor(private serverService:ServerService) { }
+  constructor(private serverService:ServerService,
+     private router:Router,
+     private activatedRoute:ActivatedRoute) { }
 
   ngOnInit() {
     this.server = this.serverService.getServer(1);
@@ -22,6 +25,15 @@ export class EditServerComponent implements OnInit {
 
   onUpdateServer(){
     this.serverService.updateServer(this.server.id,{name:this.serverName.nativeElement.value,status:this.serverStatus});
+  }
+  onReload()
+  {
+    //RELATIVE PATH
+    // this.router.navigate(['/server']);
+
+    //NOT WORKING BUTTON
+    //navigate relativ to the activated route
+    // this.router.navigate(['server'], {relativeTo:this.activatedRoute});
   }
 }
 
