@@ -1,17 +1,44 @@
 <div class="row">
   <div class="col-xs-12 col-sm-4">
     <div class="list-group">
-      <a href="#"
+      <a 
+        [routerLink]="['/servers',server.id,'edit']"    
+        [queryParams]="{allow:server.id}"
+        fragment="loading"
+        class="list-group-item"
+        *ngFor="let server of servers">
+        {{server.name}}
+      </a>
+    </div>
+  </div>
+  <div class="col-xs-12 col-sm-7">
+    <a routerLink="/server">Reload Edit Server page again</a>
+    <app-edit-server></app-edit-server>
+    <hr>
+    <app-server></app-server>
+  </div>
+</div>
+
+
+
+<!-- 
+<div class="row">
+  <div class="col-xs-12 col-sm-4">
+    <div class="list-group">
+      <a 
       class="list-group-item"
-      *ngFor="let server of servers">
+      *ngFor="let server of servers"      
+      [routerLink]="['/servers',server.id,'edit']"    
+      [queryParams]="{allowId:server.id, allowName:server.name }"
+      fragment="loading">
       {{server.name}}
     </a>
     </div>
   </div>
 <div class="row">
-  <a routerLink="/server">ReloadServers page again</a>
+  <a routerLink="/server">Reload Edit Server page</a>
     <app-edit-server></app-edit-server>
     <hr>
     <app-server></app-server>
 </div>
-</div>
+</div> -->

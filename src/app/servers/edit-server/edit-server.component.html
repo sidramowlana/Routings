@@ -1,4 +1,5 @@
-<div class="form-group">
+<br>
+<hr><div class="form-group">
   <label for="name">Server Name</label>
   <input
     type="text"
@@ -22,9 +23,15 @@
 <button 
   (click)="onUpdateServer()"
   class="btn btn-primary">Update Server</button>
-  <br>
-  <br>
+ 
 <button
   (click)="onReload()"
-  class="btn btn-primary">Reload</button>
+  class="btn btn-primary">Reload</button> //Reload button not working for now
+  <br>
+  <p><a [routerLink]="['/servers',13,'ws','wsws']">Load the id 13</a></p>
+  <p><a [routerLink]="['/servers',14,'xx','sdsd']">Load the id 14</a></p>
+  <hr>
+  <!-- <p>{{server.id}}</p>
+  <p>{{server.name}}</p>
+  <p>{{server.status}}</p> -->
   
