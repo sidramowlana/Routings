@@ -8,12 +8,12 @@ export class ServerService
         },
         {
             id:2,
-            name:"TestServer",
+            name:"TestServer1",
             status:'offline'
         },
         {
             id:3,
-            name:"DevServer",
+            name:"TestServer2",
             status:'offline'
         }
     ];

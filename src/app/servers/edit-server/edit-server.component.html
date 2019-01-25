@@ -1,12 +1,13 @@
-<br>
-<hr><div class="form-group">
-  <label for="name">Server Name</label>
-  <input
-    type="text"
-    id="name"
-    class="form-control"
-    #serverName>
-</div>
+<h4 *ngIf = "!aallowToEdit">You're not allowed!!!</h4>
+<div *ngIf = "allowToEdit">
+  <div class="form-group">
+    <label for="name">Server Name</label>
+    <input
+      type="text"
+      id="name"
+      class="form-control"
+      [(ngModel)]="serverName">
+  </div>
 
 <div class="form-group">
   <label for="status">Server Status</label>
@@ -27,11 +28,11 @@
 <button
   (click)="onReload()"
   class="btn btn-primary">Reload</button> //Reload button not working for now
-  <br>
+  <!-- <br>
   <p><a [routerLink]="['/servers',13,'ws','wsws']">Load the id 13</a></p>
   <p><a [routerLink]="['/servers',14,'xx','sdsd']">Load the id 14</a></p>
-  <hr>
+  <hr> -->
   <!-- <p>{{server.id}}</p>
   <p>{{server.name}}</p>
   <p>{{server.status}}</p> -->
-  
+</div>

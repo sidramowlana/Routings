@@ -10,9 +10,10 @@ import { Router, ActivatedRoute, Params } from '@angular/router';
 export class EditServerComponent implements OnInit {
 
   server :{id:number, name:string, status:string};
-  // serverName='';
-  @ViewChild('serverName') serverName:ElementRef;
+  serverName='';
   serverStatus='';
+  allowToEdit = false;
+
   constructor(private serverService:ServerService,
      private router:Router,
      private activatedRoute:ActivatedRoute) { }
@@ -20,37 +21,28 @@ export class EditServerComponent implements OnInit {
   ngOnInit() {   
 
     //this code will show the query parameter in the url when the user click the link
-    this.activatedRoute.snapshot.queryParams;
-    this.activatedRoute.snapshot.fragment;
-
-    this.server = {
-      //should have the same name as what is given in the path => id and name
-      id: this.activatedRoute.snapshot.params['id'],
-      name: this.activatedRoute.snapshot.params['name'],
-      status: this.activatedRoute.snapshot.params['status']
-    };
-    //this code will get the parameters from the url and display in the dom
-    this.activatedRoute.params.subscribe(
-      (param:Params)=>
+    console.log(this.activatedRoute.snapshot.queryParams);
+    console.log(this.activatedRoute.snapshot.fragment);
+    this.activatedRoute.queryParams.subscribe(
+      (queryParams:Params)=>
       {
-        this.server.id = param['id'];
-        this.server.name = param['name'];
-        this.server.status = param['status']
-      });
-      
-    
+        this.allowToEdit = queryParams['allowEdit']=== true ? true : false;
+      }
+    );
+    this.activatedRoute.fragment.subscribe()
+
     //gets the server id of server 1
     this.server = this.serverService.getServer(1);
     //gets the server name and  status
-    this.serverName.nativeElement.value = this.server.name;
+    this.serverName = this.server.name;
     this.serverStatus = this.server.status;
 
-     
+      
    }
 
   onUpdateServer(){
     this.serverService.
-      updateServer(this.server.id,{name:this.serverName.nativeElement.value,status:this.serverStatus});
+      updateServer(this.server.id,{name:this.serverName,status:this.serverStatus});
   }
   onReload()
   {
@@ -63,3 +55,20 @@ export class EditServerComponent implements OnInit {
   }
 }
 
+
+//inside ngOnInit
+//for the links in this html
+    // this.server = {
+    //   //should have the same name as what is given in the path => id and name
+    //   id: this.activatedRoute.snapshot.params['id'],
+    //   name: this.activatedRoute.snapshot.params['name'],
+    //   status: this.activatedRoute.snapshot.params['status']
+    // };
+    // //this code will get the parameters from the url and display in the dom
+    // this.activatedRoute.params.subscribe(
+    //   (param:Params)=>
+    //   {
+    //     this.server.id = param['id'];
+    //     this.server.name = param['name'];
+    //     this.server.status = param['status']
+    //   });        

@@ -16,9 +16,11 @@ export class UserComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.user = {
       //should have the same name as what is given in the path => id and name
+      //getting the name and id from the url
       id: this.activatedRoute.snapshot.params['id'],
       name: this.activatedRoute.snapshot.params['name']
     };
+    //updating the changes when a click is made and getting them
     this.paramsSubscription = this.activatedRoute.params.subscribe(
       (param:Params)=>
       {
