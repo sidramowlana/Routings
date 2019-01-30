@@ -1,18 +1,21 @@
 import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { ServerService } from '../server.service';
 import { Router, ActivatedRoute, Params } from '@angular/router';
+import { canDeactivateGuard } from './can-deactivate-guard.service';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-edit-server',
   templateUrl: './edit-server.component.html',
   styleUrls: ['./edit-server.component.css']
 })
-export class EditServerComponent implements OnInit {
+export class EditServerComponent implements OnInit, canComponentDeactivateInterface {
 
   server :{id:number, name:string, status:string};
   serverName='';
   serverStatus='';
   allowToEdit = false;
+  changesSaved = false;
 
   constructor(private serverService:ServerService,
      private router:Router,
@@ -26,24 +29,36 @@ export class EditServerComponent implements OnInit {
     this.activatedRoute.queryParams.subscribe(
       (queryParams:Params)=>
       {
-        this.allowToEdit = queryParams['allowEdit']=== true ? true : false;
+        this.allowToEdit = queryParams['allowEdit'] === 'true' ? true : false;
       }
     );
-    this.activatedRoute.fragment.subscribe()
-
-    //gets the server id of server 1
-    this.server = this.serverService.getServer(1);
-    //gets the server name and  status
-    this.serverName = this.server.name;
-    this.serverStatus = this.server.status;
-
-      
+    this.activatedRoute.fragment.subscribe();
+    const id = +this.activatedRoute.snapshot.params['id'];
+    this.server = this.serverService.getServer(id);    //gets the server id of server 1
+    this.serverName = this.server.name;    //gets the server name and  status
+    this.serverStatus = this.server.status;      
    }
 
   onUpdateServer(){
-    this.serverService.
-      updateServer(this.server.id,{name:this.serverName,status:this.serverStatus});
+    this.serverService.updateServer(this.server.id,{name:this.serverName,status:this.serverStatus});// this.changesSaved = true;
+    this.changesSaved = true;
+    this.router.navigate(['../'],{relativeTo: this.activatedRoute});
   }
+  
+canDeactivate():Observable<boolean>|Promise<boolean>|boolean{
+  if(!this.allowToEdit)// first are we allowed to edit it
+  {
+    return true;
+  }
+  if((this.serverName !== this.server.name || this.serverStatus !== this.server.status) //checks if the server name or status is done any changes
+  && (!this.changesSaved)) //and check if the changesSaved is not saved in this case u show a confirm dialog to the user
+  {
+    return confirm('Do you want to discard the changes?');
+  }
+  else{
+    return true;
+  }
+}
   onReload()
   {
     //RELATIVE PATH

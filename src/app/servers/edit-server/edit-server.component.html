@@ -1,38 +1,40 @@
-<h4 *ngIf = "!aallowToEdit">You're not allowed!!!</h4>
-<div *ngIf = "allowToEdit">
+<h4 *ngIf="!allowToEdit">You're not allowed!</h4>
+<div *ngIf="allowToEdit">
+    <div class="form-group">
+      <label for="name">Server Name</label>
+      <input
+        type="text"
+        id="name"
+        class="form-control"
+        [(ngModel)]="serverName">
+    </div>
+
   <div class="form-group">
-    <label for="name">Server Name</label>
-    <input
+    <label for="status">Server Status</label>
+    <select
       type="text"
-      id="name"
+      id="status"
       class="form-control"
-      [(ngModel)]="serverName">
+      [(ngModel)]="serverStatus">
+      <option value="online">Online</option>
+      <option value="offline">Offline</option>
+    </select>
   </div>
 
-<div class="form-group">
-  <label for="status">Server Status</label>
-  <select
-    type="text"
-    id="status"
-    class="form-control"
-    [(ngModel)]="serverStatus">
-    <option value="online">Online</option>
-    <option value="offline">Offline</option>
-  </select>
+  <button 
+    (click)="onUpdateServer()"
+    class="btn btn-primary">Update Server</button>  
 </div>
 
-<button 
-  (click)="onUpdateServer()"
-  class="btn btn-primary">Update Server</button>
- 
-<button
-  (click)="onReload()"
-  class="btn btn-primary">Reload</button> //Reload button not working for now
-  <!-- <br>
-  <p><a [routerLink]="['/servers',13,'ws','wsws']">Load the id 13</a></p>
-  <p><a [routerLink]="['/servers',14,'xx','sdsd']">Load the id 14</a></p>
-  <hr> -->
-  <!-- <p>{{server.id}}</p>
-  <p>{{server.name}}</p>
-  <p>{{server.status}}</p> -->
-</div>
+
+
+  <!-- <button
+    (click)="onReload()"
+    class="btn btn-primary">Reload</button> //Reload button not working for now -->
+    <!-- <br>
+    <p><a [routerLink]="['/servers',13,'ws','wsws']">Load the id 13</a></p>
+    <p><a [routerLink]="['/servers',14,'xx','sdsd']">Load the id 14</a></p>
+    <hr> -->
+    <!-- <p>{{server.id}}</p>
+    <p>{{server.name}}</p>
+    <p>{{server.status}}</p> -->

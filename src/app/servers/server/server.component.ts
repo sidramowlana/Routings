@@ -37,7 +37,6 @@ export class ServerComponent implements OnInit {
     //relative path
     this.router.navigate(['edit'], {relativeTo:this.activatedRoute, queryParamsHandling:'preserve'});
   }
-
 }
 
 //parseInt is same as using +sign 
